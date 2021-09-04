@@ -52,6 +52,33 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 
 	@Override
+	public List<Film> findFilmByKeyword(String keyword) {
+		List<Film> films = new ArrayList<>();
+		keyword = keyword.trim();
+		keyword = "%"+keyword+"%";
+		String sql = "SELECT id, title, description, release_year, language_id, rental_duration, "
+				+ "rental_rate, length, replacement_cost, rating, special_features FROM film WHERE (title LIKE ? OR description LIKE ?)";
+		try (Connection conn = DriverManager.getConnection(URL, user, pass);
+				PreparedStatement ps = conn.prepareStatement(sql);) {
+			ps.setString(1, keyword);
+			ps.setString(2, keyword);
+			try (ResultSet rs = ps.executeQuery();) {
+				while(rs.next()) {
+					films.add(new Film(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5),
+							rs.getInt(6), rs.getDouble(7), rs.getInt(8), rs.getDouble(9), rs.getString(10),
+							rs.getString(11)));
+				}
+			} catch (SQLException e) {
+				System.err.println("Database Error: "+e);
+			}
+		} catch (SQLException e) {
+			System.err.println("Database Error: "+e);
+
+		}
+		return films;
+	}
+
+	@Override
 	public Actor findActorById(int actorId) {
 		Actor actor = null;
 		String sql = "SELECT id, first_name, last_name FROM actor where id = ?";

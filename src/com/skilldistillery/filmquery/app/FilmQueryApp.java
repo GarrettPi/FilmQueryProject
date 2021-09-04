@@ -2,6 +2,7 @@ package com.skilldistillery.filmquery.app;
 
 import java.sql.SQLException;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import com.skilldistillery.filmquery.database.DatabaseAccessor;
@@ -88,6 +89,11 @@ public class FilmQueryApp {
 		System.out.println("What is the keyword you'd like to search for?");
 		sc.nextLine();
 		String keyword = sc.nextLine();
+		List<Film> films = db.findFilmByKeyword(keyword);
+		System.out.println(films);
+		for(Film film : films) {
+			System.out.println(film);
+		}
 	}
 
 	private void exitProgram() {
