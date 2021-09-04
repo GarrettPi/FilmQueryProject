@@ -43,36 +43,56 @@ public class FilmQueryApp {
 
 	private void startUserInterface(Scanner sc) {
 
-		System.out.println("Welcome to videos are we.  Please make a selection:");
-		System.out
-				.println("1. Look up a film by its ID\n2. Look up a film by a search keyword\n3. Exit the Application");
-		try {
-			int input = sc.nextInt();
-			switch (input) {
-			case 1:
-				System.out.println("What is the ID of the movie you'd like to look up?");
-				input = sc.nextInt();
-				Film film = db.findFilmById(input);
-				System.out.println(film);
-				break;
-			case 2:
-				System.out.println("What is the keyword you'd like to search for?");
-				sc.nextLine();
-				String keyword = sc.nextLine();
-				break;
-			case 3:
-				System.out.println("Thank you for trying out this program.  Goodbye!");
-				System.exit(1);
-				break;
-			default:
-				System.out.println("Please only choose a number 1-3");
+		System.out.println("Welcome to videos are we.");
+		while (true) {
+		System.out.println("Please make a selection:");
+		System.out.println("1. Look up a film by its ID" + "\n2. Look up a film by a search keyword"
+				+ "\n3. Exit the Application");
+			try {
+				int input = sc.nextInt();
+				switch (input) {
+				case 1:
+					findFilmById(sc);
+					break;
+				case 2:
+					findFilmByKeyword(sc);
+					break;
+				case 3:
+					exitProgram();
+					break;
+				default:
+					System.out.println("Please only choose a number 1-3");
+				}
+
+			} catch (InputMismatchException e) {
+				System.out.println("That was not a correct entry.  Please enter either a 1, 2, or 3");
+
 			}
-
-		} catch (InputMismatchException e) {
-			System.out.println("That was not a correct entry.  Please enter either a 1, 2, or 3");
-
 		}
 
+	}
+
+	private void findFilmById(Scanner sc) {
+		System.out.println("What is the ID of the movie you'd like to look up?");
+		int input = sc.nextInt();
+		Film film = db.findFilmById(input);
+		if (film == null) {
+			System.out.println("Im sorry, that film doesn't exist.  Please try again");
+		} else {
+			System.out.println(film);
+
+		}
+	}
+
+	private void findFilmByKeyword(Scanner sc) {
+		System.out.println("What is the keyword you'd like to search for?");
+		sc.nextLine();
+		String keyword = sc.nextLine();
+	}
+
+	private void exitProgram() {
+		System.out.println("Thank you for trying out this program.  Goodbye!");
+		System.exit(1);
 	}
 
 }
