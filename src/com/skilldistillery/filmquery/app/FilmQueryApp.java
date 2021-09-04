@@ -81,6 +81,7 @@ public class FilmQueryApp {
 			System.out.println("Im sorry, that film doesn't exist.  Please try again");
 		} else {
 			System.out.println(film.displayString());
+			System.out.println("Language: " + db.findFilmLanguage(film.getLanguageId()));
 
 		}
 	}
@@ -94,7 +95,7 @@ public class FilmQueryApp {
 			System.out.println("I'm sorry, no films found using that keyword.  Please try again");
 		} else {
 			for (Film film : films) {
-				System.out.println(film);
+				System.out.println(film.displayString());
 			}
 		}
 	}

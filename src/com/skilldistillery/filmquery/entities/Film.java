@@ -39,7 +39,7 @@ public class Film {
 	}
 	
 	public String displayString() {
-		String display = "Title: "+title+", Release Year: "+releaseYear+", Rating: "+rating+"\nDescription: "+description;
+		String display = "\nTitle: "+title+", Release Year: "+releaseYear+", Rating: "+rating+"\nDescription: "+description;
 		return display;
 		}
 
