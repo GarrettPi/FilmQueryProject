@@ -46,9 +46,9 @@ public class FilmQueryApp {
 
 		System.out.println("Welcome to videos are we.");
 		while (true) {
-		System.out.println("Please make a selection:");
-		System.out.println("1. Look up a film by its ID" + "\n2. Look up a film by a search keyword"
-				+ "\n3. Exit the Application");
+			System.out.println("Please make a selection:");
+			System.out.println("1. Look up a film by its ID" + "\n2. Look up a film by a search keyword"
+					+ "\n3. Exit the Application");
 			try {
 				int input = sc.nextInt();
 				switch (input) {
@@ -80,7 +80,7 @@ public class FilmQueryApp {
 		if (film == null) {
 			System.out.println("Im sorry, that film doesn't exist.  Please try again");
 		} else {
-			System.out.println(film);
+			System.out.println(film.displayString());
 
 		}
 	}
@@ -90,9 +90,12 @@ public class FilmQueryApp {
 		sc.nextLine();
 		String keyword = sc.nextLine();
 		List<Film> films = db.findFilmByKeyword(keyword);
-		System.out.println(films);
-		for(Film film : films) {
-			System.out.println(film);
+		if (films.size() < 1) {
+			System.out.println("I'm sorry, no films found using that keyword.  Please try again");
+		} else {
+			for (Film film : films) {
+				System.out.println(film);
+			}
 		}
 	}
 

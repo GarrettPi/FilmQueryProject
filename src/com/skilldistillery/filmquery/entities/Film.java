@@ -37,6 +37,11 @@ public class Film {
 		this.rating = rating;
 		this.specialFeatures = specialFeatures;
 	}
+	
+	public String displayString() {
+		String display = "Title: "+title+", Release Year: "+releaseYear+", Rating: "+rating+"\nDescription: "+description;
+		return display;
+		}
 
 	@Override
 	public String toString() {
