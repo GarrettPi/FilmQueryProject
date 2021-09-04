@@ -46,7 +46,6 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			}
 		} catch (SQLException e) {
 			System.err.println("Database Error: " + e);
-			e.printStackTrace();
 		}
 		return film;
 	}
@@ -79,14 +78,14 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 
 	@Override
-	public String findFilmLanguage(int filmId) {
+	public String findFilmLanguage(int languageId) {
 		String language = null;
 		String sql = "SELECT name FROM language WHERE id = ?";
 		try (Connection conn = DriverManager.getConnection(URL, user, pass);
 				PreparedStatement ps = conn.prepareStatement(sql);) {
-			ps.setInt(1, filmId);
+			ps.setInt(1, languageId);
 			try (ResultSet rs = ps.executeQuery();) {
-				if(rs.next()) {
+				if (rs.next()) {
 					language = rs.getString(1);
 				}
 			} catch (SQLException e) {
@@ -136,6 +135,47 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			System.err.println("Database Error: " + e);
 		}
 		return actors;
+	}
+
+	@Override
+	public String findCategoriesByFilmId(int filmId) {
+		String category = null;
+		String sql = "SELECT name FROM category c JOIN film_category f ON c.id = f.category_id WHERE f.film_id = ?";
+		try (Connection conn = DriverManager.getConnection(URL, user, pass);
+				PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setInt(1, filmId);
+			try (ResultSet rs = ps.executeQuery();) {
+				if (rs.next()) {
+					category = rs.getString(1);
+				}
+			} catch (SQLException e) {
+				System.err.println("Database Error: " + e);
+			}
+		} catch (SQLException e) {
+			System.err.println("Database Error: " + e);
+
+		}
+		return category;
+	}
+
+	@Override
+	public List<String> findFilmInInventoryByFilmId(int filmId) {
+		List<String> films = new ArrayList<>();
+		String sql = "SELECT i.id, i.store_id, i.media_condition FROM inventory_item i WHERE i.film_id = ?";
+		try (Connection conn = DriverManager.getConnection(URL, user, pass);
+				PreparedStatement ps = conn.prepareStatement(sql);) {
+			ps.setInt(1, filmId);
+			try (ResultSet rs = ps.executeQuery();) {
+				while(rs.next()) {
+					films.add(new String("Store Id: "+rs.getString(2)+", Condition: "+rs.getString(3)));
+				}
+			} catch (SQLException e) {
+				System.err.println("Database Error: " + e);
+			}
+		} catch (SQLException e) {
+			System.err.println("Database Error: " + e);
+		}
+		return films;
 	}
 
 }

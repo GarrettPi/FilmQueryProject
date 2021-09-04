@@ -32,15 +32,8 @@ public class FilmQueryApp {
 		Scanner sc = new Scanner(System.in);
 
 		startUserInterface(sc);
-
-//		Film film = db.findFilmById(id);
-//		if (film != null)
-//			film.setActors(db.findActorsByFilmId(id));
-//		if (film != null) {
-//			System.out.println(film);
-//			System.out.println(film.getActors());
-//		}
 		sc.close();
+		exitProgram();
 	}
 
 	private void startUserInterface(Scanner sc) {
@@ -54,14 +47,13 @@ public class FilmQueryApp {
 				int input = sc.nextInt();
 				switch (input) {
 				case 1:
-					findFilmById(sc);
+					filmSubMenu(findFilmById(sc), sc);
 					break;
 				case 2:
 					findFilmByKeyword(sc);
 					break;
 				case 3:
-					exitProgram();
-					break;
+					return;
 				default:
 					System.out.println("Please only choose a number 1-3");
 				}
@@ -73,8 +65,30 @@ public class FilmQueryApp {
 		}
 
 	}
+	
+	private void filmSubMenu(Film film, Scanner sc) {
+		System.out.println("\nWould you like more details about the film?");
+		System.out.println("1. Yes\n2. No");
+		try{
+			int input = sc.nextInt();
+			sc.nextLine();
+			if(input == 1) {
+				System.out.println(film.fullDisplay());
+				System.out.println("Category: "+db.findCategoriesByFilmId(film.getId()));
+				System.out.println("All available inventory: ");
+				for (String string : db.findFilmInInventoryByFilmId(film.getId())) {
+					System.out.println(string);
+				}
+			}
+			else return;
+		} catch (InputMismatchException e) {
+			System.out.println("Incorrect entry.  Returning to menu");
+			sc.nextLine();
+			return;
+		}
+	}
 
-	private void findFilmById(Scanner sc) {
+	private Film findFilmById(Scanner sc) {
 		System.out.println("What is the ID of the movie you'd like to look up?");
 		int input = sc.nextInt();
 		Film film = db.findFilmById(input);
@@ -90,6 +104,7 @@ public class FilmQueryApp {
 			}
 
 		}
+		return film;
 	}
 
 	private void findFilmByKeyword(Scanner sc) {

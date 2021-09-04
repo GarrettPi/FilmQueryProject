@@ -42,6 +42,13 @@ public class Film {
 		String display = "\nTitle: "+title+", Release Year: "+releaseYear+", Rating: "+rating+"\nDescription: "+description;
 		return display;
 		}
+	
+	public String fullDisplay() {
+		String display = "\nTitle: "+title+", Release Year: "+releaseYear+", Rating: "+rating+", Length: "+length+
+				"\nRental Duration: "+rentalDuration+" days, Rental Rate: "+rentalRate+" per day, Replacement Cost: "+replacementCost+", Special Features: "+specialFeatures+
+				"\nDescription: "+description;
+		return display;
+	}
 
 	@Override
 	public String toString() {
