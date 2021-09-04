@@ -19,7 +19,9 @@ public class Actor {
 		this.lastName = lastName;
 	}
 	
-
+	public String displayString() {
+		return firstName+" "+lastName;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

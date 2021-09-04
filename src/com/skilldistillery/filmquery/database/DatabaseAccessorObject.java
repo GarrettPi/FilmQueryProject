@@ -52,26 +52,6 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 
 	@Override
-	public String findFilmLanguage(int filmId) {
-		String language = null;
-		String sql = "SELECT name FROM language WHERE id = ?";
-		try (Connection conn = DriverManager.getConnection(URL, user, pass);
-				PreparedStatement ps = conn.prepareStatement(sql);) {
-			ps.setInt(1, filmId);
-			try (ResultSet rs = ps.executeQuery();) {
-				if(rs.next()) {
-					language = rs.getString(1);
-				}
-			} catch (SQLException e) {
-				System.err.println("Database Error: " + e);
-			}
-		} catch (SQLException e) {
-			System.err.println("Database Error: " + e);
-		}
-		return language;
-	}
-
-	@Override
 	public List<Film> findFilmByKeyword(String keyword) {
 		List<Film> films = new ArrayList<>();
 		keyword = keyword.trim();
@@ -96,6 +76,26 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 		}
 		return films;
+	}
+
+	@Override
+	public String findFilmLanguage(int filmId) {
+		String language = null;
+		String sql = "SELECT name FROM language WHERE id = ?";
+		try (Connection conn = DriverManager.getConnection(URL, user, pass);
+				PreparedStatement ps = conn.prepareStatement(sql);) {
+			ps.setInt(1, filmId);
+			try (ResultSet rs = ps.executeQuery();) {
+				if(rs.next()) {
+					language = rs.getString(1);
+				}
+			} catch (SQLException e) {
+				System.err.println("Database Error: " + e);
+			}
+		} catch (SQLException e) {
+			System.err.println("Database Error: " + e);
+		}
+		return language;
 	}
 
 	@Override

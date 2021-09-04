@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import com.skilldistillery.filmquery.database.DatabaseAccessor;
 import com.skilldistillery.filmquery.database.DatabaseAccessorObject;
+import com.skilldistillery.filmquery.entities.Actor;
 import com.skilldistillery.filmquery.entities.Film;
 
 public class FilmQueryApp {
@@ -46,7 +47,7 @@ public class FilmQueryApp {
 
 		System.out.println("Welcome to videos are we.");
 		while (true) {
-			System.out.println("Please make a selection:");
+			System.out.println("\nPlease make a selection:");
 			System.out.println("1. Look up a film by its ID" + "\n2. Look up a film by a search keyword"
 					+ "\n3. Exit the Application");
 			try {
@@ -80,8 +81,13 @@ public class FilmQueryApp {
 		if (film == null) {
 			System.out.println("Im sorry, that film doesn't exist.  Please try again");
 		} else {
+			film.setActors(db.findActorsByFilmId(input));
 			System.out.println(film.displayString());
 			System.out.println("Language: " + db.findFilmLanguage(film.getLanguageId()));
+			System.out.println("Cast: ");
+			for (Actor actor : film.getActors()) {
+				System.out.println(actor.displayString());
+			}
 
 		}
 	}
@@ -95,7 +101,13 @@ public class FilmQueryApp {
 			System.out.println("I'm sorry, no films found using that keyword.  Please try again");
 		} else {
 			for (Film film : films) {
+				film.setActors(db.findActorsByFilmId(film.getId()));
 				System.out.println(film.displayString());
+				System.out.println("Language: " + db.findFilmLanguage(film.getLanguageId()));
+				System.out.println("Cast: ");
+				for(Actor actor : film.getActors()) {
+					System.out.println(actor.displayString());
+				}
 			}
 		}
 	}
