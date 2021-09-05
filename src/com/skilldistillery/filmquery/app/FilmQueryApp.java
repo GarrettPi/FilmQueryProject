@@ -47,7 +47,8 @@ public class FilmQueryApp {
 				int input = sc.nextInt();
 				switch (input) {
 				case 1:
-					filmSubMenu(findFilmById(sc), sc);
+					Film film = findFilmById(sc);
+					if(film != null) filmSubMenu(film, sc);
 					break;
 				case 2:
 					findFilmByKeyword(sc);
@@ -114,6 +115,7 @@ public class FilmQueryApp {
 		List<Film> films = db.findFilmByKeyword(keyword);
 		if (films.size() < 1) {
 			System.out.println("I'm sorry, no films found using that keyword.  Please try again");
+			return;
 		} else {
 			for (Film film : films) {
 				film.setActors(db.findActorsByFilmId(film.getId()));
