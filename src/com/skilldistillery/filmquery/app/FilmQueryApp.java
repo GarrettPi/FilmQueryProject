@@ -61,6 +61,7 @@ public class FilmQueryApp {
 
 			} catch (InputMismatchException e) {
 				System.out.println("That was not a correct entry.  Please enter either a 1, 2, or 3");
+				sc.nextLine();
 
 			}
 		}
@@ -91,8 +92,10 @@ public class FilmQueryApp {
 
 	private Film findFilmById(Scanner sc) {
 		System.out.println("What is the ID of the movie you'd like to look up?");
+		Film film = null;
+		try {
 		int input = sc.nextInt();
-		Film film = db.findFilmById(input);
+		film = db.findFilmById(input);
 		if (film == null) {
 			System.out.println("Im sorry, that film doesn't exist.  Please try again");
 		} else {
@@ -104,6 +107,10 @@ public class FilmQueryApp {
 				System.out.println(actor.displayString());
 			}
 
+		}
+		} catch(InputMismatchException e) {
+			System.out.println("Please enter a numerical film Id");
+			sc.nextLine();
 		}
 		return film;
 	}
