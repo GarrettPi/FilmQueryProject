@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.skilldistillery.filmquery.entities.Actor;
+import com.skilldistillery.filmquery.entities.Category;
 import com.skilldistillery.filmquery.entities.Film;
 
 public interface DatabaseAccessor {
@@ -12,6 +13,6 @@ public interface DatabaseAccessor {
   public List<Actor> findActorsByFilmId(int filmId);
   public List<Film> findFilmByKeyword(String keyword);
   public String findFilmLanguage(int languageId);
-  public String findCategoriesByFilmId(int filmId);
+  public Category findCategoriesByFilmId(int filmId);
   public List<String> findFilmInInventoryByFilmId(int filmId);
 }

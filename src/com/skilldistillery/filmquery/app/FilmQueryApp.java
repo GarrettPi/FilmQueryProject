@@ -76,7 +76,7 @@ public class FilmQueryApp {
 			sc.nextLine();
 			if(input == 1) {
 				System.out.println(film.fullDisplay());
-				System.out.println("Category: "+db.findCategoriesByFilmId(film.getId()));
+				System.out.println("Category: "+db.findCategoriesByFilmId(film.getId()).getName());
 				System.out.println("All available inventory: ");
 				for (String string : db.findFilmInInventoryByFilmId(film.getId())) {
 					System.out.println(string);

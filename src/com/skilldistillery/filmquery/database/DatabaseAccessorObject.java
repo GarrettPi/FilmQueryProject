@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.skilldistillery.filmquery.entities.Actor;
+import com.skilldistillery.filmquery.entities.Category;
 import com.skilldistillery.filmquery.entities.Film;
 
 public class DatabaseAccessorObject implements DatabaseAccessor {
@@ -138,15 +139,15 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 
 	@Override
-	public String findCategoriesByFilmId(int filmId) {
-		String category = null;
-		String sql = "SELECT name FROM category c JOIN film_category f ON c.id = f.category_id WHERE f.film_id = ?";
+	public Category findCategoriesByFilmId(int filmId) {
+		Category category = null;
+		String sql = "SELECT id, name FROM category c JOIN film_category f ON c.id = f.category_id WHERE f.film_id = ?";
 		try (Connection conn = DriverManager.getConnection(URL, user, pass);
 				PreparedStatement ps = conn.prepareStatement(sql)) {
 			ps.setInt(1, filmId);
 			try (ResultSet rs = ps.executeQuery();) {
 				if (rs.next()) {
-					category = rs.getString(1);
+					category = new Category(rs.getInt(1), rs.getString(2));
 				}
 			} catch (SQLException e) {
 				System.err.println("Database Error: " + e);

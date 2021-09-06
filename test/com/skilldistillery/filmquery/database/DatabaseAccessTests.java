@@ -66,13 +66,12 @@ class DatabaseAccessTests {
   @Test
   @DisplayName("Invalid film id returns null category")
   void test7() {
-	  String category = db.findCategoriesByFilmId(-1);
-	  assertNull(category);
+	  assertNull(db.findCategoriesByFilmId(-1));
   }
   @Test
   @DisplayName("Valid film id returns correct category")
   void test8() {
-	  String category = db.findCategoriesByFilmId(981);
+	  String category = db.findCategoriesByFilmId(981).getName();
 	  assertEquals("Travel", category);
   }
   @Test
