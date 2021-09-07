@@ -40,9 +40,9 @@ Garrett Pipes
 
 ### Technologies Used
 
-* Object-Relational Mapping (ORM)
-* MySQL
 * Java Database Connectivity (JDBC)
+* MySQL
+* Object-Relational Mapping (ORM)
 * Maven
 * JUnit 5
 
